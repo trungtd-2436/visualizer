@@ -173,6 +173,9 @@ if __name__ == "__main__":
     Button(Mainframe, text="Generate", bg="#ff7518", command=generate).grid(
         row=0, column=3, padx=5, pady=5
     )
-
+    
+    Button(root, text="Quit", command=root.destroy).grid(
+            row=0, column=3, padx=5, pady=5
+        )
 
     root.mainloop()
