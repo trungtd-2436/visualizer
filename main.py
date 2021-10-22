@@ -45,6 +45,44 @@ def bubble_sort(data, drawData, timeTick):
                 
     drawData(data, ['#0CA8F6' for x in range(len(data))])
 
+def merge(data, start, mid, end, drawData, timeTick):
+    p = start
+    q = mid + 1
+    tempArray = []
+
+    for i in range(start, end+1):
+        if p > mid:
+            tempArray.append(data[q])
+            q+=1
+        elif q > end:
+            tempArray.append(data[p])
+            p+=1
+        elif data[p] < data[q]:
+            tempArray.append(data[p])
+            p+=1
+        else:
+            tempArray.append(data[q])
+            q+=1
+
+    for p in range(len(tempArray)):
+        data[start] = tempArray[p]
+        start += 1
+
+def merge_sort(data, start, end, drawData, timeTick):
+    if start < end:
+        mid = int((start + end) / 2)
+        merge_sort(data, start, mid, drawData, timeTick)
+        merge_sort(data, mid+1, end, drawData, timeTick)
+
+        merge(data, start, mid, end, drawData, timeTick)
+
+        drawData(data, ['#BF01FB' if x >= start and x < mid else '#F7E806' if x == mid 
+                        else '#4204CC' if x > mid and x <=end else '#0CA8F6' for x in range(len(data))])
+        time.sleep(timeTick)
+
+    drawData(data, ['#0CA8F6' for x in range(len(data))])
+
+
 def get_color_array(dataLen, head, tail, border, cur_idx, isSwaping=False):
     colorArray = []
     for i in range(dataLen):
@@ -121,6 +159,9 @@ def start_algorithm():
     elif algmenu.get() == "Bubble Sort":
         bubble_sort(data, draw_data,  speedbar.get())
 
+    elif algmenu.get() == "Merge Sort":
+        merge_sort(data, 0, len(data)-1, draw_data, speedbar.get())
+
 if __name__ == "__main__":
     root = Tk()
     root.title("Quick Sort Visualizer")
@@ -143,7 +184,7 @@ if __name__ == "__main__":
     )
 
 
-    algmenu = ttk.Combobox(Mainframe, textvariable=select_alg, values=["Quick Sort", "Bubble Sort"])
+    algmenu = ttk.Combobox(Mainframe, textvariable=select_alg, values=["Quick Sort", "Bubble Sort", "Merge Sort"])
     algmenu.grid(row=0, column=1, padx=5, pady=5)
     algmenu.current(0)
 
