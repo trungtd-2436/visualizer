@@ -82,6 +82,19 @@ def merge_sort(data, start, end, drawData, timeTick):
 
     drawData(data, ['#0CA8F6' for x in range(len(data))])
 
+def insertion_sort(data, drawData, timeTick):
+    for i in range(len(data)):
+        temp = data[i]
+        k = i
+        while k > 0 and temp < data[k-1]:
+            data[k] = data[k-1]
+            k -= 1
+        data[k] = temp
+        drawData(data, ['#F7E806' if x == k or x == i else '#0CA8F6' for x in range(len(data))])
+        time.sleep(timeTick)
+        
+    drawData(data, ['#0CA8F6' for x in range(len(data))])
+
 
 def get_color_array(dataLen, head, tail, border, cur_idx, isSwaping=False):
     colorArray = []
@@ -161,6 +174,9 @@ def start_algorithm():
 
     elif algmenu.get() == "Merge Sort":
         merge_sort(data, 0, len(data)-1, draw_data, speedbar.get())
+    
+    elif algmenu.get() == "Insertion Sort":
+        insertion_sort(data, draw_data, speedbar.get())
 
 if __name__ == "__main__":
     root = Tk()
@@ -184,7 +200,7 @@ if __name__ == "__main__":
     )
 
 
-    algmenu = ttk.Combobox(Mainframe, textvariable=select_alg, values=["Quick Sort", "Bubble Sort", "Merge Sort"])
+    algmenu = ttk.Combobox(Mainframe, textvariable=select_alg, values=["Quick Sort", "Bubble Sort", "Merge Sort", "Insertion Sort"])
     algmenu.grid(row=0, column=1, padx=5, pady=5)
     algmenu.current(0)
 
